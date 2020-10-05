@@ -21,10 +21,10 @@ export default class App extends Component {
     });
   };
 
-  countTotal = () => Object.values().reduce((acc, value) => (acc += value));
+  countTotal = () => Object.values().reduce((acc, value) => acc + value);
 
   countPercentGood = (total) =>
-    total > 0 ? Math.round((this.state.good * 100) / total) : 0;
+    total ? Math.round((this.state.good * 100) / total) : 0;
 
   render() {
     const { good, neutral, bad } = this.state;
@@ -41,9 +41,7 @@ export default class App extends Component {
             onNeutral={this.handleChange}
             onBad={this.handleChange}
           />
-          {total === 0 ? (
-            <Notification message="No feedback given" />
-          ) : (
+          {total ? (
             <Statistics
               good={good}
               neutral={neutral}
@@ -51,6 +49,8 @@ export default class App extends Component {
               total={total}
               percentGood={percentGood}
             />
+          ) : (
+            <Notification message="No feedback given" />
           )}
         </Section>
       </div>
